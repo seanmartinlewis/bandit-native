@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import { db, auth } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import type { Band, BandRole, UserProfile } from '../types/firestore';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface BandState {
   currentBand: Band | null;
@@ -45,9 +44,11 @@ export const useBandStore = create<BandState>((set, get) => ({
       const uid = auth.currentUser?.uid;
       const role = uid ? (band.members?.[uid]?.role ?? null) : null;
 
-      set({ currentBand: band, currentRole: role, loading: false });
-      await AsyncStorage.setItem('lastViewedBandId', bandId);
-      set({ lastViewedBandId: bandId });
+      set({ currentBand: band, currentRole: role, loading: false, lastViewedBandId: bandId });
+      if (uid) {
+        const { updateLastViewedBandId } = await import('../services/userProfileService');
+        await updateLastViewedBandId(uid, bandId);
+      }
     } catch (error) {
       set({ loading: false });
       throw error;
@@ -84,7 +85,11 @@ export const useBandStore = create<BandState>((set, get) => ({
     try {
       const { getUserProfile } = await import('../services/userProfileService');
       const profile = await getUserProfile(userId);
-      set({ userProfile: profile, userProfileLoaded: true });
+      set({
+        userProfile: profile,
+        userProfileLoaded: true,
+        lastViewedBandId: profile?.lastViewedBandId || get().lastViewedBandId,
+      });
     } catch (error) {
       console.error('Error loading user profile:', error);
     }
@@ -96,22 +101,26 @@ export const useBandStore = create<BandState>((set, get) => ({
     try {
       const { getUserProfile } = await import('../services/userProfileService');
       const profile = await getUserProfile(userId);
-      set({ userProfile: profile });
+      set({
+        userProfile: profile,
+        lastViewedBandId: profile?.lastViewedBandId || get().lastViewedBandId,
+      });
     } catch (error) {
       console.error('Error refreshing user profile:', error);
     }
   },
 
   setLastViewedBandId: async (bandId: string | null) => {
-    if (bandId) {
-      await AsyncStorage.setItem('lastViewedBandId', bandId);
-    } else {
-      await AsyncStorage.removeItem('lastViewedBandId');
+    const userId = auth.currentUser?.uid;
+    if (userId) {
+      const { updateLastViewedBandId } = await import('../services/userProfileService');
+      await updateLastViewedBandId(userId, bandId);
     }
     set({ lastViewedBandId: bandId });
   },
 
   reset: () => {
+    const lastViewedBandId = get().lastViewedBandId;
     set({
       currentBand: null,
       currentRole: null,
@@ -120,14 +129,7 @@ export const useBandStore = create<BandState>((set, get) => ({
       userBandsLoaded: false,
       userProfile: null,
       userProfileLoaded: false,
-      lastViewedBandId: null,
+      lastViewedBandId,
     });
   },
 }));
-
-// Initialize lastViewedBandId from AsyncStorage
-AsyncStorage.getItem('lastViewedBandId').then((value) => {
-  if (value) {
-    useBandStore.setState({ lastViewedBandId: value });
-  }
-});

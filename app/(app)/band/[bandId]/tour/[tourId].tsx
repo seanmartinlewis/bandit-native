@@ -26,17 +26,19 @@ export default function TourDetailsScreen() {
     setLoading(true);
     try {
       const tourSnap = await getDoc(doc(db, 'tours', tourId!));
+      let loadedTour: Tour | null = null;
       if (tourSnap.exists()) {
         const t = tourSnap.data();
-        setTour({
+        loadedTour = {
           id: tourSnap.id, bandId: t.bandId, name: t.name, description: t.description,
           posterUrl: t.posterUrl, startDate: t.startDate, endDate: t.endDate,
           createdAt: t.createdAt?.toDate() || new Date(), createdBy: t.createdBy,
-        } as Tour);
+        } as Tour;
+        setTour(loadedTour);
       }
       const allShows = await getShowsForBand(bandId!);
       const tourShows = allShows.filter(
-        (s) => tour?.startDate && tour?.endDate && s.date >= tour.startDate && s.date <= tour.endDate,
+        (s) => loadedTour?.startDate && loadedTour?.endDate && s.date >= loadedTour.startDate && s.date <= loadedTour.endDate,
       );
       setShows(tourShows.sort((a, b) => a.date.localeCompare(b.date)));
     } catch {

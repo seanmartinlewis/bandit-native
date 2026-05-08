@@ -23,6 +23,7 @@ export default function AppLayout() {
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="boot" />
       <Stack.Screen name="dashboard" />
       <Stack.Screen name="band/[bandId]" />
       <Stack.Screen name="profile" />

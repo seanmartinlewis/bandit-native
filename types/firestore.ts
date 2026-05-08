@@ -233,6 +233,7 @@ export interface UserProfile {
   isPublic: boolean;
   instruments: Instrument[];
   mediaLinks: MediaLink[];
+  lastViewedBandId?: string;
   createdAt: Date;
   updatedAt: Date;
 }

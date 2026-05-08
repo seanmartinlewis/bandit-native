@@ -16,7 +16,7 @@ export default function BandLayout() {
     const unsub = onSnapshot(doc(db, 'bands', bandId), async (snapshot) => {
       if (snapshot.exists()) {
         await bandStore.loadBand(bandId);
-        if (!bandStore.currentRole) {
+        if (!useBandStore.getState().currentRole) {
           router.replace('/(app)/dashboard');
         }
       } else {

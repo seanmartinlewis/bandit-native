@@ -5,7 +5,7 @@ import { useLocalSearchParams } from 'expo-router';
 import AppHeader from '@/components/AppHeader';
 import { useBandStore } from '@/store/bandStore';
 import { db } from '@/firebase';
-import { collection, query, where, getDocs, deleteDoc, doc, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import type { BandDocument } from '@/types/firestore';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 

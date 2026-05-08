@@ -19,6 +19,7 @@ export default function DashboardScreen() {
   const [bandName, setBandName] = useState('');
   const [creating, setCreating] = useState(false);
   const [pendingInvites, setPendingInvites] = useState<Invite[]>([]);
+  const [invitesLoaded, setInvitesLoaded] = useState(false);
   const [processingInvite, setProcessingInvite] = useState<string | null>(null);
 
   useEffect(() => {
@@ -36,9 +37,28 @@ export default function DashboardScreen() {
     const unsub = onSnapshot(q, (snapshot) => {
       const invites: Invite[] = snapshot.docs.map((d) => ({ id: d.id, ...(d.data() as any) }));
       setPendingInvites(invites);
+      setInvitesLoaded(true);
+    }, () => {
+      setInvitesLoaded(true);
     });
     return unsub;
   }, []);
+
+  useEffect(() => {
+    if (!bandStore.userBandsLoaded || !invitesLoaded || pendingInvites.length > 0) return;
+    if (bandStore.userBands.length === 0) return;
+
+    const targetBandId = bandStore.lastViewedBandId || bandStore.userBands[0]?.id;
+    if (targetBandId) {
+      router.replace(`/(app)/band/${targetBandId}/shows` as any);
+    }
+  }, [
+    bandStore.userBandsLoaded,
+    bandStore.userBands,
+    bandStore.lastViewedBandId,
+    invitesLoaded,
+    pendingInvites.length,
+  ]);
 
   async function handleCreateBand() {
     const user = auth.currentUser;
@@ -144,7 +164,8 @@ export default function DashboardScreen() {
         {/* Has bands, no invites */}
         {bandStore.userBands.length > 0 && pendingInvites.length === 0 && (
           <View className="items-center pt-12">
-            <Text className="text-gray-600 dark:text-stone-300 text-center">Select a band from the menu to get started.</Text>
+            <ActivityIndicator color="#2563eb" />
+            <Text className="text-gray-600 dark:text-stone-300 text-center mt-3">Opening your band...</Text>
           </View>
         )}
       </ScrollView>

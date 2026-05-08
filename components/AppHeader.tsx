@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import NavDrawer from './NavDrawer';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
@@ -11,14 +10,10 @@ interface AppHeaderProps {
 
 export default function AppHeader({ bandId, rightElement }: AppHeaderProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const insets = useSafeAreaInsets();
 
   return (
     <>
-      <View
-        style={{ paddingTop: insets.top }}
-        className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800"
-      >
+      <View className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
         <View className="flex-row items-center justify-between px-4 py-3">
           <Text className="text-2xl font-bold text-blue-600 dark:text-slate-400 uppercase tracking-widest">
             Bandit

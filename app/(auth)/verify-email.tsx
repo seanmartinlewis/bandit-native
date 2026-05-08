@@ -3,9 +3,11 @@ import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { router } from 'expo-router';
 import { sendEmailVerification, reload, signOut } from 'firebase/auth';
 import { auth } from '@/firebase';
+import { useBandStore } from '@/store/bandStore';
 
 export default function VerifyEmailScreen() {
   const [loading, setLoading] = useState(false);
+  const bandStore = useBandStore();
 
   async function handleResend() {
     const user = auth.currentUser;
@@ -28,7 +30,7 @@ export default function VerifyEmailScreen() {
     try {
       await reload(user);
       if (user.emailVerified) {
-        router.replace('/(app)/dashboard');
+        router.replace('/(app)/boot');
       } else {
         Alert.alert('Not Verified', 'Your email has not been verified yet. Please check your inbox.');
       }
@@ -40,6 +42,7 @@ export default function VerifyEmailScreen() {
   }
 
   async function handleSignOut() {
+    bandStore.reset();
     await signOut(auth);
     router.replace('/(auth)/login');
   }

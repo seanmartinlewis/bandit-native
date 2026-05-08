@@ -39,6 +39,16 @@ export async function updateUserProfile(
   });
 }
 
+export async function updateLastViewedBandId(
+  userId: string,
+  bandId: string | null,
+): Promise<void> {
+  await updateDoc(doc(db, 'users', userId), {
+    lastViewedBandId: bandId ?? '',
+    updatedAt: serverTimestamp(),
+  });
+}
+
 export async function addMediaLink(
   userId: string,
   link: Omit<MediaLink, 'id' | 'order'>,

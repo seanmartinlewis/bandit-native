@@ -15,7 +15,7 @@ export default function AuthLayout() {
 
   // If user is authenticated and email verified, redirect to app
   if (user && user.emailVerified) {
-    return <Redirect href="/(app)/dashboard" />;
+    return <Redirect href="/(app)/boot" />;
   }
 
   // If user is authenticated but email not verified, redirect to verify

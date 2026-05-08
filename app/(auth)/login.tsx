@@ -12,14 +12,11 @@ import {
 import { Link, router } from 'expo-router';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/firebase';
-import { useBandStore } from '@/store/bandStore';
-import { getInvitesForEmail } from '@/services/inviteService';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const bandStore = useBandStore();
 
   async function handleLogin() {
     if (!email || !password) {
@@ -35,20 +32,7 @@ export default function LoginScreen() {
         return;
       }
 
-      await bandStore.loadUserBands();
-      const pendingInvites = await getInvitesForEmail(cred.user.email || '');
-
-      if (bandStore.userBands.length === 0 && pendingInvites.length === 0) {
-        router.replace('/(app)/dashboard');
-      } else if (pendingInvites.length > 0) {
-        router.replace('/(app)/dashboard');
-      } else if (bandStore.lastViewedBandId) {
-        router.replace(`/(app)/band/${bandStore.lastViewedBandId}/shows` as any);
-      } else if (bandStore.userBands[0]) {
-        router.replace(`/(app)/band/${bandStore.userBands[0].id}/shows` as any);
-      } else {
-        router.replace('/(app)/dashboard');
-      }
+      router.replace('/(app)/boot');
     } catch (err: any) {
       Alert.alert('Login Failed', err.message || 'Failed to login');
     } finally {
