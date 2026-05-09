@@ -44,10 +44,10 @@ export default function ShowDetailsTab({ show, onUpdated }: Props) {
 
   const Field = ({ label, value, field, keyboard }: { label: string; value: string; field: keyof typeof form; keyboard?: any }) => (
     <View className="mb-3">
-      <Text className="text-xs font-semibold text-gray-500 dark:text-stone-500 uppercase mb-1">{label}</Text>
+      <Text className="text-xs font-redhat-semibold text-gray-500 dark:text-stone-500 uppercase mb-1">{label}</Text>
       {editing ? (
         <TextInput
-          className="border border-gray-300 dark:border-stone-700 rounded-lg px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm"
+          className="border border-gray-300 dark:border-stone-700 rounded-lg px-3 py-2 bg-white dark:bg-charcoal-800 text-gray-900 dark:text-orange-100 text-sm"
           value={form[field]}
           onChangeText={(v) => setForm((f) => ({ ...f, [field]: v }))}
           keyboardType={keyboard || 'default'}
@@ -62,18 +62,18 @@ export default function ShowDetailsTab({ show, onUpdated }: Props) {
   return (
     <View className="pb-8">
       <View className="flex-row justify-between items-center mb-4">
-        <Text className="font-semibold text-gray-900 dark:text-white">Show Details</Text>
+        <Text className="font-redhat-semibold text-gray-900 dark:text-orange-100">Show Details</Text>
         {canEdit && (
           editing
             ? <View className="flex-row gap-2">
-                <TouchableOpacity onPress={() => setEditing(false)} className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                <TouchableOpacity onPress={() => setEditing(false)} className="px-3 py-1 bg-gray-100 dark:bg-charcoal-700 rounded-lg">
                   <Text className="text-sm text-gray-700 dark:text-stone-300">Cancel</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={save} className="px-3 py-1 bg-blue-600 rounded-lg">
+                <TouchableOpacity onPress={save} className="px-3 py-1 bg-bandit-primary dark:bg-bandit-primaryDark rounded-lg">
                   <Text className="text-sm text-white">Save</Text>
                 </TouchableOpacity>
               </View>
-            : <TouchableOpacity onPress={() => setEditing(true)} className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-lg">
+            : <TouchableOpacity onPress={() => setEditing(true)} className="px-3 py-1 bg-gray-100 dark:bg-charcoal-700 rounded-lg">
                 <Text className="text-sm text-gray-700 dark:text-stone-300">Edit</Text>
               </TouchableOpacity>
         )}

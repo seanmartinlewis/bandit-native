@@ -48,11 +48,11 @@ export default function VerifyEmailScreen() {
   }
 
   return (
-    <View className="flex-1 items-center justify-center bg-gray-100 dark:bg-gray-900 px-8">
-      <Text className="text-4xl font-bold text-blue-600 dark:text-slate-400 mb-2 tracking-widest uppercase">
+    <View className="flex-1 items-center justify-center bg-gray-100 dark:bg-charcoal-900 px-8">
+      <Text className="font-bitcount text-4xl text-bandit-primary dark:text-bandit-primarySoft mb-2 tracking-widest uppercase">
         Bandit
       </Text>
-      <Text className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+      <Text className="font-redhat-semibold text-2xl text-gray-900 dark:text-orange-100 mb-4">
         Verify Your Email
       </Text>
       <Text className="text-sm text-gray-600 dark:text-stone-400 text-center mb-8">
@@ -61,19 +61,19 @@ export default function VerifyEmailScreen() {
 
       <View className="w-full space-y-3">
         <TouchableOpacity
-          className="w-full bg-blue-600 py-3 rounded-lg items-center"
+          className="w-full bg-bandit-primary dark:bg-bandit-primaryDark py-3 rounded-lg items-center"
           onPress={handleCheckVerification}
           disabled={loading}
         >
-          <Text className="text-white font-semibold">I've Verified My Email</Text>
+          <Text className="text-white font-redhat-semibold">I've Verified My Email</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          className="w-full bg-gray-200 dark:bg-gray-700 py-3 rounded-lg items-center"
+          className="w-full bg-gray-200 dark:bg-charcoal-700 py-3 rounded-lg items-center"
           onPress={handleResend}
           disabled={loading}
         >
-          <Text className="text-gray-700 dark:text-stone-300 font-semibold">Resend Verification Email</Text>
+          <Text className="text-gray-700 dark:text-stone-300 font-redhat-semibold">Resend Verification Email</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

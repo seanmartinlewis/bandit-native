@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Alert, ScrollView, Switch } from 'react-native';
+import { banditColors } from '@/constants/Colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
 import AppHeader from '@/components/AppHeader';
@@ -52,14 +53,14 @@ export default function SettingsScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white dark:bg-gray-900" edges={['top']}>
+    <SafeAreaView className="flex-1 bg-white dark:bg-charcoal-900" edges={['top']}>
       <AppHeader bandId={bandId} />
       <ScrollView className="flex-1 px-4 pt-4">
-        <Text className="text-lg font-semibold text-gray-900 dark:text-orange-100 mb-6">Band Settings</Text>
+        <Text className="font-redhat-semibold text-lg text-gray-900 dark:text-orange-100 mb-6">Band Settings</Text>
 
         {/* Band Status */}
-        <View className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 mb-4 border border-gray-200 dark:border-stone-700">
-          <Text className="font-semibold text-gray-900 dark:text-white mb-2">Band Status</Text>
+        <View className="bg-gray-50 dark:bg-charcoal-800 rounded-lg p-4 mb-4 border border-gray-200 dark:border-stone-700">
+          <Text className="font-redhat-semibold text-gray-900 dark:text-orange-100 mb-2">Band Status</Text>
           <View className="flex-row items-center justify-between">
             <View className="flex-1 mr-3">
               <Text className="text-sm text-gray-700 dark:text-stone-300">Active</Text>
@@ -71,7 +72,7 @@ export default function SettingsScreen() {
               value={isActive}
               onValueChange={handleToggleStatus}
               disabled={savingStatus}
-              trackColor={{ false: '#d1d5db', true: '#2563eb' }}
+              trackColor={{ false: '#d1d5db', true: banditColors.primary }}
               thumbColor="white"
             />
           </View>
@@ -79,7 +80,7 @@ export default function SettingsScreen() {
 
         {/* Danger Zone */}
         <View className="border border-red-200 dark:border-red-800 rounded-lg p-4">
-          <Text className="font-semibold text-red-700 dark:text-red-400 mb-1">Danger Zone</Text>
+          <Text className="font-redhat-semibold text-red-700 dark:text-red-400 mb-1">Danger Zone</Text>
           <Text className="text-sm text-gray-600 dark:text-stone-400 mb-4">
             Deleting the band will permanently remove all band data, shows, and documents. This action cannot be undone.
           </Text>
@@ -87,7 +88,7 @@ export default function SettingsScreen() {
             className="py-3 bg-red-600 rounded-lg items-center"
             onPress={handleDeleteBand}
           >
-            <Text className="text-white font-semibold">Delete Band</Text>
+            <Text className="text-white font-redhat-semibold">Delete Band</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

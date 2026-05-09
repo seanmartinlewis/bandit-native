@@ -3,6 +3,7 @@ import {
   View, Text, TextInput, TouchableOpacity, ScrollView,
   ActivityIndicator, Alert,
 } from 'react-native';
+import { useBrandTint } from '@/constants/Colors';
 import { router } from 'expo-router';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import { db, auth } from '@/firebase';
@@ -16,6 +17,7 @@ import AppHeader from '@/components/AppHeader';
 
 export default function DashboardScreen() {
   const bandStore = useBandStore();
+  const tint = useBrandTint();
   const [bandName, setBandName] = useState('');
   const [creating, setCreating] = useState(false);
   const [pendingInvites, setPendingInvites] = useState<Invite[]>([]);
@@ -104,18 +106,18 @@ export default function DashboardScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white dark:bg-gray-900" edges={['top']}>
+    <SafeAreaView className="flex-1 bg-white dark:bg-charcoal-900" edges={['top']}>
       <AppHeader />
       <ScrollView className="flex-1 p-4">
         {/* Pending Invites */}
         {pendingInvites.length > 0 && (
           <View className="space-y-3 mb-6">
             {pendingInvites.map((invite) => (
-              <View key={invite.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-stone-700 rounded-lg p-4 shadow-sm">
+              <View key={invite.id} className="bg-white dark:bg-charcoal-800 border border-gray-200 dark:border-stone-700 rounded-lg p-4 shadow-sm">
                 <Text className="text-sm text-gray-600 dark:text-stone-400 mb-1">You've been invited to join</Text>
-                <Text className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{invite.bandName || 'a band'}</Text>
+                <Text className="font-redhat-semibold text-lg text-gray-900 dark:text-orange-100 mb-1">{invite.bandName || 'a band'}</Text>
                 <Text className="text-sm text-gray-600 dark:text-stone-300 mb-3">
-                  Role: <Text className="capitalize font-medium">{invite.role}</Text>
+                  Role: <Text className="capitalize font-redhat-medium">{invite.role}</Text>
                 </Text>
                 <View className="flex-row gap-2">
                   <TouchableOpacity
@@ -123,14 +125,14 @@ export default function DashboardScreen() {
                     onPress={() => handleAcceptInvite(invite)}
                     disabled={processingInvite === invite.id}
                   >
-                    <Text className="text-white font-medium">{processingInvite === invite.id ? 'Accepting...' : 'Accept'}</Text>
+                    <Text className="text-white font-redhat-medium">{processingInvite === invite.id ? 'Accepting...' : 'Accept'}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    className="flex-1 bg-gray-200 dark:bg-gray-700 py-2 rounded-lg items-center"
+                    className="flex-1 bg-gray-200 dark:bg-charcoal-700 py-2 rounded-lg items-center"
                     onPress={() => handleDeclineInvite(invite)}
                     disabled={processingInvite === invite.id}
                   >
-                    <Text className="text-gray-700 dark:text-stone-300 font-medium">Decline</Text>
+                    <Text className="text-gray-700 dark:text-stone-300 font-redhat-medium">Decline</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -141,21 +143,21 @@ export default function DashboardScreen() {
         {/* Create Band Form (no bands and no pending invites) */}
         {bandStore.userBands.length === 0 && pendingInvites.length === 0 && (
           <View className="items-center pt-8">
-            <Text className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Welcome to Bandit</Text>
+            <Text className="text-3xl font-bold text-gray-900 dark:text-orange-100 mb-2">Welcome to Bandit</Text>
             <Text className="text-gray-600 dark:text-stone-300 mb-8 text-center">Get started by creating your first band</Text>
-            <View className="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-stone-700 rounded-lg p-6">
-              <Text className="text-sm font-medium text-gray-700 dark:text-stone-400 mb-1">Band Name *</Text>
+            <View className="w-full bg-white dark:bg-charcoal-800 border border-gray-200 dark:border-stone-700 rounded-lg p-6">
+              <Text className="text-sm font-redhat-medium text-gray-700 dark:text-stone-400 mb-1">Band Name *</Text>
               <TextInput
-                className="w-full px-3 py-3 border border-gray-300 dark:border-stone-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white mb-2"
+                className="w-full px-3 py-3 border border-gray-300 dark:border-stone-700 rounded-lg bg-white dark:bg-charcoal-700 text-gray-900 dark:text-orange-100 mb-2"
                 placeholder="Enter band name" placeholderTextColor="#9ca3af"
                 value={bandName} onChangeText={setBandName}
               />
               <Text className="text-xs text-gray-500 mb-4">Choose a unique name for your band. You can change this later.</Text>
               <TouchableOpacity
-                className={`py-3 rounded-lg items-center ${!bandName.trim() ? 'bg-blue-400' : 'bg-blue-600'}`}
+                className={`py-3 rounded-lg items-center ${!bandName.trim() ? 'bg-bandit-primaryDisabled' : 'bg-bandit-primary dark:bg-bandit-primaryDark'}`}
                 onPress={handleCreateBand} disabled={creating || !bandName.trim()}
               >
-                {creating ? <ActivityIndicator color="white" /> : <Text className="text-white font-semibold">Create Band</Text>}
+                {creating ? <ActivityIndicator color="white" /> : <Text className="text-white font-redhat-semibold">Create Band</Text>}
               </TouchableOpacity>
             </View>
           </View>
@@ -164,7 +166,7 @@ export default function DashboardScreen() {
         {/* Has bands, no invites */}
         {bandStore.userBands.length > 0 && pendingInvites.length === 0 && (
           <View className="items-center pt-12">
-            <ActivityIndicator color="#2563eb" />
+            <ActivityIndicator color={tint} />
             <Text className="text-gray-600 dark:text-stone-300 text-center mt-3">Opening your band...</Text>
           </View>
         )}

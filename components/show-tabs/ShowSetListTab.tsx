@@ -55,22 +55,22 @@ export default function ShowSetListTab({ show, onUpdated }: Props) {
   return (
     <View className="pb-8">
       <View className="flex-row justify-between items-center mb-4">
-        <Text className="font-semibold text-gray-900 dark:text-white">Set List</Text>
+        <Text className="font-redhat-semibold text-gray-900 dark:text-orange-100">Set List</Text>
         <Text className="text-sm text-gray-500 dark:text-stone-500">{sortedSetList.length} songs</Text>
       </View>
 
       {canEdit && (
         <View className="flex-row gap-2 mb-4">
           <TextInput
-            className="flex-1 border border-gray-300 dark:border-stone-700 rounded-lg px-3 py-2.5 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm"
+            className="flex-1 border border-gray-300 dark:border-stone-700 rounded-lg px-3 py-2.5 bg-white dark:bg-charcoal-800 text-gray-900 dark:text-orange-100 text-sm"
             placeholder="Song title" placeholderTextColor="#9ca3af"
             value={songTitle} onChangeText={setSongTitle}
           />
           <TouchableOpacity
-            className={`px-4 py-2.5 rounded-lg items-center justify-center ${!songTitle.trim() ? 'bg-blue-400' : 'bg-blue-600'}`}
+            className={`px-4 py-2.5 rounded-lg items-center justify-center ${!songTitle.trim() ? 'bg-bandit-primaryDisabled' : 'bg-bandit-primary dark:bg-bandit-primaryDark'}`}
             onPress={handleAdd} disabled={!songTitle.trim() || saving}
           >
-            <Text className="text-white font-medium">Add</Text>
+            <Text className="text-white font-redhat-medium">Add</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -79,9 +79,9 @@ export default function ShowSetListTab({ show, onUpdated }: Props) {
         <Text className="text-gray-500 dark:text-stone-500 text-sm text-center py-4">No songs in set list yet</Text>
       ) : (
         sortedSetList.map((song, idx) => (
-          <View key={song.id} className="flex-row items-center p-3 mb-1 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-stone-700">
-            <Text className="text-gray-500 dark:text-stone-500 text-sm w-7 font-medium">{idx + 1}.</Text>
-            <Text className="flex-1 text-gray-900 dark:text-white text-sm">{song.title}</Text>
+          <View key={song.id} className="flex-row items-center p-3 mb-1 bg-gray-50 dark:bg-charcoal-800 rounded-lg border border-gray-200 dark:border-stone-700">
+            <Text className="text-gray-500 dark:text-stone-500 text-sm w-7 font-redhat-medium">{idx + 1}.</Text>
+            <Text className="flex-1 text-gray-900 dark:text-orange-100 text-sm">{song.title}</Text>
             {canEdit && (
               <TouchableOpacity onPress={() => handleRemove(song)} className="p-1">
                 <FontAwesome name="times" size={14} color="#dc2626" />

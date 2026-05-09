@@ -55,17 +55,17 @@ export default function RegisterScreen() {
   );
 
   return (
-    <KeyboardAvoidingView className="flex-1 bg-gray-100 dark:bg-gray-900" behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+    <KeyboardAvoidingView className="flex-1 bg-gray-100 dark:bg-charcoal-900" behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
         <View className="flex-1 items-center justify-center px-8 py-12">
-          <Text className="text-4xl font-bold text-blue-600 dark:text-slate-400 mb-2 tracking-widest uppercase">Bandit</Text>
-          <Text className="text-2xl font-semibold text-gray-900 dark:text-white mb-8">Create Account</Text>
+          <Text className="font-bitcount text-4xl text-bandit-primary dark:text-bandit-primarySoft mb-2 tracking-widest uppercase">Bandit</Text>
+          <Text className="font-redhat-semibold text-2xl text-gray-900 dark:text-orange-100 mb-8">Create Account</Text>
 
           <View className="w-full space-y-4">
             <View>
-              <Text className="text-sm font-medium text-gray-700 dark:text-stone-400 mb-1">Email</Text>
+              <Text className="text-sm font-redhat-medium text-gray-700 dark:text-stone-400 mb-1">Email</Text>
               <TextInput
-                className="w-full px-3 py-3 border border-gray-300 dark:border-stone-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                className="w-full px-3 py-3 border border-gray-300 dark:border-stone-700 rounded-lg bg-white dark:bg-charcoal-800 text-gray-900 dark:text-orange-100"
                 placeholder="you@example.com" placeholderTextColor="#9ca3af"
                 value={email} onChangeText={setEmail}
                 autoCapitalize="none" keyboardType="email-address" autoComplete="email"
@@ -73,9 +73,9 @@ export default function RegisterScreen() {
             </View>
 
             <View>
-              <Text className="text-sm font-medium text-gray-700 dark:text-stone-400 mb-1">Password</Text>
+              <Text className="text-sm font-redhat-medium text-gray-700 dark:text-stone-400 mb-1">Password</Text>
               <TextInput
-                className={`w-full px-3 py-3 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white ${password && !isPasswordValid ? 'border-red-500' : 'border-gray-300 dark:border-stone-700'}`}
+                className={`w-full px-3 py-3 border rounded-lg bg-white dark:bg-charcoal-800 text-gray-900 dark:text-orange-100 ${password && !isPasswordValid ? 'border-red-500' : 'border-gray-300 dark:border-stone-700'}`}
                 placeholder="••••••••" placeholderTextColor="#9ca3af"
                 value={password} onChangeText={setPassword} secureTextEntry
               />
@@ -85,9 +85,9 @@ export default function RegisterScreen() {
             </View>
 
             <View>
-              <Text className="text-sm font-medium text-gray-700 dark:text-stone-400 mb-1">Confirm Password</Text>
+              <Text className="text-sm font-redhat-medium text-gray-700 dark:text-stone-400 mb-1">Confirm Password</Text>
               <TextInput
-                className={`w-full px-3 py-3 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white ${confirmPassword && !passwordsMatch ? 'border-red-500' : 'border-gray-300 dark:border-stone-700'}`}
+                className={`w-full px-3 py-3 border rounded-lg bg-white dark:bg-charcoal-800 text-gray-900 dark:text-orange-100 ${confirmPassword && !passwordsMatch ? 'border-red-500' : 'border-gray-300 dark:border-stone-700'}`}
                 placeholder="••••••••" placeholderTextColor="#9ca3af"
                 value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry
               />
@@ -97,16 +97,16 @@ export default function RegisterScreen() {
             </View>
 
             <TouchableOpacity
-              className={`w-full py-3 rounded-lg items-center mt-2 ${!isPasswordValid || !passwordsMatch || !email ? 'bg-blue-400' : 'bg-blue-600'}`}
+              className={`w-full py-3 rounded-lg items-center mt-2 ${!isPasswordValid || !passwordsMatch || !email ? 'bg-bandit-primaryDisabled' : 'bg-bandit-primary dark:bg-bandit-primaryDark'}`}
               onPress={handleRegister} disabled={loading || !isPasswordValid || !passwordsMatch || !email}
             >
-              <Text className="text-white font-semibold text-base">{loading ? 'Creating...' : 'Create Account'}</Text>
+              <Text className="text-white font-redhat-semibold text-base">{loading ? 'Creating...' : 'Create Account'}</Text>
             </TouchableOpacity>
           </View>
 
           <View className="flex-row mt-6">
             <Text className="text-sm text-gray-600 dark:text-stone-300">Already have an account? </Text>
-            <Link href="/(auth)/login" className="text-sm text-blue-600 dark:text-blue-400">Login</Link>
+            <Link href="/(auth)/login" className="text-sm text-bandit-primary dark:text-bandit-primarySoft">Login</Link>
           </View>
         </View>
       </ScrollView>

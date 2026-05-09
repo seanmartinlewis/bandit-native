@@ -34,19 +34,19 @@ export default function ShowNotesTab({ show, onUpdated }: Props) {
   return (
     <View className="pb-8">
       <View className="flex-row justify-between items-center mb-4">
-        <Text className="font-semibold text-gray-900 dark:text-white">Notes</Text>
+        <Text className="font-redhat-semibold text-gray-900 dark:text-orange-100">Notes</Text>
         {canEdit && (
           editing ? (
             <View className="flex-row gap-2">
-              <TouchableOpacity onPress={() => { setNotes(show?.notes || ''); setEditing(false); }} className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-lg">
+              <TouchableOpacity onPress={() => { setNotes(show?.notes || ''); setEditing(false); }} className="px-3 py-1 bg-gray-100 dark:bg-charcoal-700 rounded-lg">
                 <Text className="text-sm text-gray-700 dark:text-stone-300">Cancel</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={handleSave} disabled={saving} className="px-3 py-1 bg-blue-600 rounded-lg">
+              <TouchableOpacity onPress={handleSave} disabled={saving} className="px-3 py-1 bg-bandit-primary dark:bg-bandit-primaryDark rounded-lg">
                 <Text className="text-sm text-white">{saving ? 'Saving...' : 'Save'}</Text>
               </TouchableOpacity>
             </View>
           ) : (
-            <TouchableOpacity onPress={() => setEditing(true)} className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-lg">
+            <TouchableOpacity onPress={() => setEditing(true)} className="px-3 py-1 bg-gray-100 dark:bg-charcoal-700 rounded-lg">
               <Text className="text-sm text-gray-700 dark:text-stone-300">Edit</Text>
             </TouchableOpacity>
           )
@@ -55,7 +55,7 @@ export default function ShowNotesTab({ show, onUpdated }: Props) {
 
       {editing ? (
         <TextInput
-          className="border border-gray-300 dark:border-stone-700 rounded-lg px-3 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm min-h-[200px]"
+          className="border border-gray-300 dark:border-stone-700 rounded-lg px-3 py-3 bg-white dark:bg-charcoal-800 text-gray-900 dark:text-orange-100 text-sm min-h-[200px]"
           value={notes}
           onChangeText={setNotes}
           multiline
@@ -64,7 +64,7 @@ export default function ShowNotesTab({ show, onUpdated }: Props) {
           placeholderTextColor="#9ca3af"
         />
       ) : (
-        <View className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-stone-700 min-h-[100px]">
+        <View className="p-3 bg-gray-50 dark:bg-charcoal-800 rounded-lg border border-gray-200 dark:border-stone-700 min-h-[100px]">
           {notes ? (
             <Text className="text-gray-800 dark:text-stone-200 text-sm leading-relaxed">{notes}</Text>
           ) : (

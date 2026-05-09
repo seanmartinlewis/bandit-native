@@ -42,7 +42,7 @@ export default function LoginScreen() {
 
   return (
     <KeyboardAvoidingView
-      className="flex-1 bg-gray-100 dark:bg-gray-900"
+      className="flex-1 bg-gray-100 dark:bg-charcoal-900"
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView
@@ -50,16 +50,16 @@ export default function LoginScreen() {
         keyboardShouldPersistTaps="handled"
       >
         <View className="flex-1 items-center justify-center px-8">
-          <Text className="text-4xl font-bold text-blue-600 dark:text-slate-400 mb-2 tracking-widest uppercase">
+          <Text className="font-bitcount text-4xl text-bandit-primary dark:text-bandit-primarySoft mb-2 tracking-widest uppercase">
             Bandit
           </Text>
-          <Text className="text-2xl font-semibold text-gray-900 dark:text-white mb-8">Login</Text>
+          <Text className="font-redhat-semibold text-2xl text-gray-900 dark:text-orange-100 mb-8">Login</Text>
 
           <View className="w-full space-y-4">
             <View>
-              <Text className="text-sm font-medium text-gray-700 dark:text-stone-400 mb-1">Email</Text>
+              <Text className="text-sm font-redhat-medium text-gray-700 dark:text-stone-400 mb-1">Email</Text>
               <TextInput
-                className="w-full px-3 py-3 border border-gray-300 dark:border-stone-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                className="w-full px-3 py-3 border border-gray-300 dark:border-stone-700 rounded-lg bg-white dark:bg-charcoal-800 text-gray-900 dark:text-orange-100"
                 placeholder="you@example.com"
                 placeholderTextColor="#9ca3af"
                 value={email}
@@ -72,13 +72,13 @@ export default function LoginScreen() {
 
             <View>
               <View className="flex-row items-center justify-between mb-1">
-                <Text className="text-sm font-medium text-gray-700 dark:text-stone-400">Password</Text>
-                <Link href="/(auth)/forgot-password" className="text-xs text-blue-600 dark:text-blue-400">
+                <Text className="text-sm font-redhat-medium text-gray-700 dark:text-stone-400">Password</Text>
+                <Link href="/(auth)/forgot-password" className="text-xs text-bandit-primary dark:text-bandit-primarySoft">
                   Forgot password?
                 </Link>
               </View>
               <TextInput
-                className="w-full px-3 py-3 border border-gray-300 dark:border-stone-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                className="w-full px-3 py-3 border border-gray-300 dark:border-stone-700 rounded-lg bg-white dark:bg-charcoal-800 text-gray-900 dark:text-orange-100"
                 placeholder="••••••••"
                 placeholderTextColor="#9ca3af"
                 value={password}
@@ -89,11 +89,11 @@ export default function LoginScreen() {
             </View>
 
             <TouchableOpacity
-              className="w-full bg-blue-600 py-3 rounded-lg items-center mt-2"
+              className="w-full bg-bandit-primary dark:bg-bandit-primaryDark py-3 rounded-lg items-center mt-2"
               onPress={handleLogin}
               disabled={loading}
             >
-              <Text className="text-white font-semibold text-base">
+              <Text className="text-white font-redhat-semibold text-base">
                 {loading ? 'Logging in...' : 'Login'}
               </Text>
             </TouchableOpacity>
@@ -101,7 +101,7 @@ export default function LoginScreen() {
 
           <View className="flex-row mt-6">
             <Text className="text-sm text-gray-600 dark:text-stone-300">New here? </Text>
-            <Link href="/(auth)/register" className="text-sm text-blue-600 dark:text-blue-400">
+            <Link href="/(auth)/register" className="text-sm text-bandit-primary dark:text-bandit-primarySoft">
               Create Account
             </Link>
           </View>

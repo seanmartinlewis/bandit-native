@@ -2,11 +2,13 @@ import React, { useEffect, useRef } from 'react';
 import {
   View, Text, TouchableOpacity, Animated, Pressable, ScrollView, Image,
 } from 'react-native';
+import { banditColors } from '@/constants/Colors';
 import { router, usePathname } from 'expo-router';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/firebase';
 import { useBandStore } from '@/store/bandStore';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useColorScheme } from './useColorScheme';
 
 interface NavDrawerProps {
   isOpen: boolean;
@@ -19,6 +21,9 @@ export default function NavDrawer({ isOpen, onClose, bandId }: NavDrawerProps) {
   const overlayAnim = useRef(new Animated.Value(0)).current;
   const bandStore = useBandStore();
   const pathname = usePathname();
+  const colorScheme = useColorScheme();
+  const activeNavColor = colorScheme === 'dark' ? banditColors.primarySoft : banditColors.primary;
+  const inactiveNavColor = colorScheme === 'dark' ? '#a8a29e' : '#374151';
 
   useEffect(() => {
     Animated.parallel([
@@ -37,9 +42,9 @@ export default function NavDrawer({ isOpen, onClose, bandId }: NavDrawerProps) {
 
   const navigate = (href: string, nextBandId?: string) => {
     onClose();
-    if (nextBandId) {
-      bandStore.setLastViewedBandId(nextBandId).catch((error) => {
-        console.error('Failed to persist selected band:', error);
+    if (nextBandId && nextBandId !== bandStore.currentBand?.id) {
+      bandStore.loadBand(nextBandId).catch((error) => {
+        console.error('Failed to switch band:', error);
       });
     }
     setTimeout(() => router.push(href as any), 100);
@@ -64,11 +69,11 @@ export default function NavDrawer({ isOpen, onClose, bandId }: NavDrawerProps) {
 
   const NavItem = ({ tab, icon, label, href }: { tab: string; icon: string; label: string; href: string }) => (
     <TouchableOpacity
-      className={`flex-row items-center gap-2 px-3 py-2 rounded-lg mb-0.5 ${currentTab === tab ? 'bg-blue-50 dark:bg-gray-800' : ''}`}
+      className={`flex-row items-center gap-2 px-3 py-2 rounded-lg mb-0.5 ${currentTab === tab ? 'bg-bandit-primaryWash dark:bg-charcoal-800' : ''}`}
       onPress={() => navigate(href)}
     >
-      <FontAwesome name={icon as any} size={16} color={currentTab === tab ? '#2563eb' : '#6b7280'} />
-      <Text className={`text-sm font-medium ${currentTab === tab ? 'text-blue-700 dark:text-slate-300' : 'text-gray-700 dark:text-stone-400'}`}>{label}</Text>
+      <FontAwesome name={icon as any} size={16} color={currentTab === tab ? activeNavColor : inactiveNavColor} />
+      <Text className={`text-sm font-redhat-medium ${currentTab === tab ? 'text-bandit-primaryStrong dark:text-bandit-primarySoft' : 'text-gray-700 dark:text-stone-400'}`}>{label}</Text>
     </TouchableOpacity>
   );
 
@@ -83,7 +88,7 @@ export default function NavDrawer({ isOpen, onClose, bandId }: NavDrawerProps) {
         </Animated.View>
       )}
       <Animated.View style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 280, zIndex: 50, transform: [{ translateX: slideAnim }] }}
-        className="bg-white dark:bg-gray-900 shadow-xl">
+        className="bg-white dark:bg-charcoal-900 shadow-xl">
         <ScrollView className="flex-1 pt-12">
           {/* Band / User Info */}
           <View className="p-4">
@@ -91,10 +96,10 @@ export default function NavDrawer({ isOpen, onClose, bandId }: NavDrawerProps) {
               <View>
                 <View className="w-full h-24 rounded-lg overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 mb-2">
                   {bandPic ? <Image source={{ uri: bandPic }} className="w-full h-full" resizeMode="cover" />
-                    : <View className="flex-1 items-center justify-center"><Text className="text-white text-2xl font-bold">{bandName.charAt(0).toUpperCase()}</Text></View>}
+                    : <View className="flex-1 items-center justify-center"><Text className="text-white font-redhat-bold text-2xl">{bandName.charAt(0).toUpperCase()}</Text></View>}
                 </View>
-                <Text className="font-semibold text-gray-900 dark:text-white">{bandName}</Text>
-                <View className={`self-start px-2 py-0.5 rounded-full mt-1 ${isAdmin ? 'bg-orange-600' : canEdit ? 'bg-blue-600' : 'bg-green-600'}`}>
+                <Text className="font-redhat-semibold text-gray-900 dark:text-orange-100">{bandName}</Text>
+                <View className={`self-start px-2 py-0.5 rounded-full mt-1 ${isAdmin ? 'bg-orange-600' : canEdit ? 'bg-bandit-primary dark:bg-bandit-primaryDark' : 'bg-green-600'}`}>
                   <Text className="text-white text-xs capitalize">{bandStore.currentRole}</Text>
                 </View>
               </View>
@@ -103,9 +108,9 @@ export default function NavDrawer({ isOpen, onClose, bandId }: NavDrawerProps) {
                 <View className="w-full h-24 rounded-lg overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 mb-2">
                   {bandStore.userProfile?.profilePictureUrl
                     ? <Image source={{ uri: bandStore.userProfile.profilePictureUrl }} className="w-full h-full" resizeMode="cover" />
-                    : <View className="flex-1 items-center justify-center"><Text className="text-white text-2xl font-bold">{bandStore.userProfile?.displayName?.charAt(0).toUpperCase() || 'U'}</Text></View>}
+                    : <View className="flex-1 items-center justify-center"><Text className="text-white font-redhat-bold text-2xl">{bandStore.userProfile?.displayName?.charAt(0).toUpperCase() || 'U'}</Text></View>}
                 </View>
-                <Text className="font-semibold text-gray-900 dark:text-white">{bandStore.userProfile?.displayName || 'User'}</Text>
+                <Text className="font-redhat-semibold text-gray-900 dark:text-orange-100">{bandStore.userProfile?.displayName || 'User'}</Text>
                 <Text className="text-xs text-gray-500 dark:text-stone-500">No bands yet</Text>
               </View>
             )}
@@ -130,7 +135,7 @@ export default function NavDrawer({ isOpen, onClose, bandId }: NavDrawerProps) {
 
                 {otherBands.length > 0 && (
                   <View className="mt-4 pt-4 border-t border-gray-200 dark:border-stone-700">
-                    <Text className="px-2 text-xs font-semibold text-gray-500 dark:text-stone-500 uppercase mb-2">Other Bands</Text>
+                    <Text className="px-2 text-xs font-redhat-semibold text-gray-500 dark:text-stone-500 uppercase mb-2">Other Bands</Text>
                     {otherBands.map((band) => (
                       <TouchableOpacity key={band.id} className="flex-row items-center gap-2 px-3 py-2 rounded-lg" onPress={() => navigate(`/(app)/band/${band.id}/shows`, band.id)}>
                         <View className="w-5 h-5 rounded-full overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 items-center justify-center">
@@ -144,9 +149,9 @@ export default function NavDrawer({ isOpen, onClose, bandId }: NavDrawerProps) {
                 )}
 
                 <View className="mt-4 pt-4 border-t border-gray-200 dark:border-stone-700">
-                  <Text className="px-2 text-xs font-semibold text-gray-500 dark:text-stone-500 uppercase mb-2">User Profile</Text>
+                  <Text className="px-2 text-xs font-redhat-semibold text-gray-500 dark:text-stone-500 uppercase mb-2">User Profile</Text>
                   <TouchableOpacity className="flex-row items-center gap-2 px-3 py-2 rounded-lg" onPress={() => navigate('/(app)/profile')}>
-                    <FontAwesome name="user-circle-o" size={16} color="#6b7280" />
+                    <FontAwesome name="user-circle-o" size={16} color={inactiveNavColor} />
                     <Text className="text-sm text-gray-700 dark:text-stone-400">My Profile</Text>
                   </TouchableOpacity>
                 </View>

@@ -60,10 +60,10 @@ export default function ShowGuestListTab({ show, onUpdated }: Props) {
   return (
     <View className="pb-8">
       <View className="flex-row justify-between items-center mb-4">
-        <Text className="font-semibold text-gray-900 dark:text-white">Guest List</Text>
+        <Text className="font-redhat-semibold text-gray-900 dark:text-orange-100">Guest List</Text>
         {totalSpots !== null && (
           <View className={`px-2 py-0.5 rounded-full ${used >= totalSpots ? 'bg-red-100 dark:bg-red-900/30' : 'bg-green-100 dark:bg-green-900/30'}`}>
-            <Text className={`text-xs font-semibold ${used >= totalSpots ? 'text-red-700 dark:text-red-400' : 'text-green-700 dark:text-green-400'}`}>
+            <Text className={`text-xs font-redhat-semibold ${used >= totalSpots ? 'text-red-700 dark:text-red-400' : 'text-green-700 dark:text-green-400'}`}>
               {used} / {totalSpots} spots used
             </Text>
           </View>
@@ -73,15 +73,15 @@ export default function ShowGuestListTab({ show, onUpdated }: Props) {
       {canEdit && (
         <View className="flex-row gap-2 mb-4">
           <TextInput
-            className="flex-1 border border-gray-300 dark:border-stone-700 rounded-lg px-3 py-2.5 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm"
+            className="flex-1 border border-gray-300 dark:border-stone-700 rounded-lg px-3 py-2.5 bg-white dark:bg-charcoal-800 text-gray-900 dark:text-orange-100 text-sm"
             placeholder="Guest name" placeholderTextColor="#9ca3af"
             value={name} onChangeText={setName}
           />
           <TouchableOpacity
-            className={`px-4 py-2.5 rounded-lg items-center justify-center ${!name.trim() ? 'bg-blue-400' : 'bg-blue-600'}`}
+            className={`px-4 py-2.5 rounded-lg items-center justify-center ${!name.trim() ? 'bg-bandit-primaryDisabled' : 'bg-bandit-primary dark:bg-bandit-primaryDark'}`}
             onPress={handleAdd} disabled={!name.trim() || saving}
           >
-            <Text className="text-white font-medium">Add</Text>
+            <Text className="text-white font-redhat-medium">Add</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -90,10 +90,10 @@ export default function ShowGuestListTab({ show, onUpdated }: Props) {
         <Text className="text-gray-500 dark:text-stone-500 text-sm text-center py-4">No guests added yet</Text>
       ) : (
         (show?.guestList || []).map((entry, idx) => (
-          <View key={entry.id} className="flex-row items-center p-3 mb-1 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-stone-700">
+          <View key={entry.id} className="flex-row items-center p-3 mb-1 bg-gray-50 dark:bg-charcoal-800 rounded-lg border border-gray-200 dark:border-stone-700">
             <Text className="text-gray-500 dark:text-stone-500 text-sm w-6">{idx + 1}.</Text>
             <View className="flex-1">
-              <Text className="font-medium text-gray-900 dark:text-white text-sm">{entry.name}</Text>
+              <Text className="font-redhat-medium text-gray-900 dark:text-orange-100 text-sm">{entry.name}</Text>
               <Text className="text-xs text-gray-500 dark:text-stone-500">Added by {entry.addedBy}</Text>
             </View>
             {canEdit && (

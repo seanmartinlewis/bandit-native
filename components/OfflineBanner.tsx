@@ -43,7 +43,7 @@ export default function OfflineBanner() {
       className="absolute left-0 right-0 top-0 z-50 flex-row items-center justify-center gap-2 bg-amber-500 px-4 pb-2"
     >
       <FontAwesome name="wifi" size={14} color="#78350f" />
-      <Text className="text-center text-sm font-medium text-amber-950">
+      <Text className="text-center text-sm font-redhat-medium text-amber-950">
         You're offline. Some features may be unavailable.
       </Text>
     </View>

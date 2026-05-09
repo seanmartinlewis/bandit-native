@@ -65,13 +65,13 @@ export default function ShowAccountingTab({ showId }: Props) {
       <Text className="flex-1 text-sm text-gray-600 dark:text-stone-400">{label}</Text>
       {editing ? (
         <TextInput
-          className="w-28 text-right border border-gray-300 dark:border-stone-700 rounded-lg px-2 py-1.5 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm"
+          className="w-28 text-right border border-gray-300 dark:border-stone-700 rounded-lg px-2 py-1.5 bg-white dark:bg-charcoal-800 text-gray-900 dark:text-orange-100 text-sm"
           value={section === 'revenue' ? (formRevenue as any)[field] : (formExpenses as any)[field]}
           onChangeText={(v) => section === 'revenue' ? setFormRevenue((f) => ({ ...f, [field]: v })) : setFormExpenses((f) => ({ ...f, [field]: v }))}
           keyboardType="decimal-pad" placeholder="0"  placeholderTextColor="#9ca3af"
         />
       ) : (
-        <Text className="text-sm font-medium text-gray-900 dark:text-white">
+        <Text className="text-sm font-redhat-medium text-gray-900 dark:text-orange-100">
           ${section === 'revenue' ? (accounting.revenue as any)[field] : (accounting.expenses as any)[field]}
         </Text>
       )}
@@ -83,18 +83,18 @@ export default function ShowAccountingTab({ showId }: Props) {
   return (
     <View className="pb-8">
       <View className="flex-row justify-between items-center mb-4">
-        <Text className="font-semibold text-gray-900 dark:text-white">Accounting</Text>
+        <Text className="font-redhat-semibold text-gray-900 dark:text-orange-100">Accounting</Text>
         {editing ? (
           <View className="flex-row gap-2">
-            <TouchableOpacity onPress={() => { setEditing(false); load(); }} className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-lg">
+            <TouchableOpacity onPress={() => { setEditing(false); load(); }} className="px-3 py-1 bg-gray-100 dark:bg-charcoal-700 rounded-lg">
               <Text className="text-sm text-gray-700 dark:text-stone-300">Cancel</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleSave} disabled={saving} className="px-3 py-1 bg-blue-600 rounded-lg">
+            <TouchableOpacity onPress={handleSave} disabled={saving} className="px-3 py-1 bg-bandit-primary dark:bg-bandit-primaryDark rounded-lg">
               <Text className="text-sm text-white">{saving ? 'Saving...' : 'Save'}</Text>
             </TouchableOpacity>
           </View>
         ) : (
-          <TouchableOpacity onPress={() => setEditing(true)} className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-lg">
+          <TouchableOpacity onPress={() => setEditing(true)} className="px-3 py-1 bg-gray-100 dark:bg-charcoal-700 rounded-lg">
             <Text className="text-sm text-gray-700 dark:text-stone-300">Edit</Text>
           </TouchableOpacity>
         )}
@@ -110,22 +110,22 @@ export default function ShowAccountingTab({ showId }: Props) {
           <Text className="text-xs text-gray-500 dark:text-stone-500">Expenses</Text>
           <Text className="text-lg font-bold text-red-700 dark:text-red-400">${totalExpenses}</Text>
         </View>
-        <View className={`flex-1 p-3 ${netProfit >= 0 ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800' : 'bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800'} rounded-lg border`}>
+        <View className={`flex-1 p-3 ${netProfit >= 0 ? 'bg-bandit-primaryWash dark:bg-bandit-primaryWashDark border-blue-200 dark:border-slate-700' : 'bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800'} rounded-lg border`}>
           <Text className="text-xs text-gray-500 dark:text-stone-500">Net</Text>
-          <Text className={`text-lg font-bold ${netProfit >= 0 ? 'text-blue-700 dark:text-blue-400' : 'text-orange-700 dark:text-orange-400'}`}>${netProfit}</Text>
+          <Text className={`text-lg font-bold ${netProfit >= 0 ? 'text-bandit-primaryStrong dark:text-bandit-primarySoft' : 'text-orange-700 dark:text-orange-400'}`}>${netProfit}</Text>
         </View>
       </View>
 
-      <Text className="font-semibold text-gray-900 dark:text-white mb-2">Revenue</Text>
-      <View className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg mb-4">
+      <Text className="font-redhat-semibold text-gray-900 dark:text-orange-100 mb-2">Revenue</Text>
+      <View className="p-3 bg-gray-50 dark:bg-charcoal-800 rounded-lg mb-4">
         <Field label="Settlement" value="" field="settlement" section="revenue" />
         <Field label="Buyout" value="" field="buyout" section="revenue" />
         <Field label="Merch (Cash)" value="" field="merchCash" section="revenue" />
         <Field label="Merch (Digital)" value="" field="merchDigital" section="revenue" />
       </View>
 
-      <Text className="font-semibold text-gray-900 dark:text-white mb-2">Expenses</Text>
-      <View className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg mb-4">
+      <Text className="font-redhat-semibold text-gray-900 dark:text-orange-100 mb-2">Expenses</Text>
+      <View className="p-3 bg-gray-50 dark:bg-charcoal-800 rounded-lg mb-4">
         <Field label="Support Payout" value="" field="supportPayout" section="expenses" />
         <Field label="Booking Cut" value="" field="bookingCut" section="expenses" />
         <Field label="Merch Cut" value="" field="merchCut" section="expenses" />
@@ -135,14 +135,14 @@ export default function ShowAccountingTab({ showId }: Props) {
         <Field label="Misc" value="" field="misc" section="expenses" />
       </View>
 
-      <Text className="font-semibold text-gray-900 dark:text-white mb-2">Notes</Text>
+      <Text className="font-redhat-semibold text-gray-900 dark:text-orange-100 mb-2">Notes</Text>
       {editing ? (
         <TextInput
-          className="border border-gray-300 dark:border-stone-700 rounded-lg px-3 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm min-h-[80px]"
+          className="border border-gray-300 dark:border-stone-700 rounded-lg px-3 py-3 bg-white dark:bg-charcoal-800 text-gray-900 dark:text-orange-100 text-sm min-h-[80px]"
           value={formNotes} onChangeText={setFormNotes} multiline textAlignVertical="top" placeholder="Accounting notes..." placeholderTextColor="#9ca3af"
         />
       ) : (
-        <Text className="text-sm text-gray-700 dark:text-stone-300 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">{accounting.notes || 'No notes'}</Text>
+        <Text className="text-sm text-gray-700 dark:text-stone-300 bg-gray-50 dark:bg-charcoal-800 p-3 rounded-lg">{accounting.notes || 'No notes'}</Text>
       )}
     </View>
   );

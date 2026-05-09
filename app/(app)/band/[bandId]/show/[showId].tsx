@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import {
   View, Text, TouchableOpacity, ScrollView, ActivityIndicator, Alert,
 } from 'react-native';
+import { banditColors, useBrandTint } from '@/constants/Colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -32,6 +33,7 @@ function formatDate(dateStr: string | undefined): string {
 export default function ShowDetailsScreen() {
   const { bandId, showId } = useLocalSearchParams<{ bandId: string; showId: string }>();
   const bandStore = useBandStore();
+  const tint = useBrandTint();
   const [show, setShow] = useState<Show | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentTab, setCurrentTab] = useState('details');
@@ -69,13 +71,13 @@ export default function ShowDetailsScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white dark:bg-gray-900" edges={['top']}>
+    <SafeAreaView className="flex-1 bg-white dark:bg-charcoal-900" edges={['top']}>
       <AppHeader bandId={bandId} />
 
       {/* Show Header */}
-      <View className="px-4 pt-3 pb-2 border-b border-gray-100 dark:border-gray-800">
+      <View className="px-4 pt-3 pb-2 border-b border-gray-100 dark:border-charcoal-800">
         <View className="flex-row items-center justify-between">
-          <Text className="text-lg font-semibold text-gray-900 dark:text-white flex-1" numberOfLines={1}>
+          <Text className="font-redhat-semibold text-lg text-gray-900 dark:text-orange-100 flex-1" numberOfLines={1}>
             {show?.isTravelDay ? 'Travel Day' : show?.venue}
           </Text>
           <View className="flex-row items-center gap-2">
@@ -85,8 +87,8 @@ export default function ShowDetailsScreen() {
               </TouchableOpacity>
             )}
             <TouchableOpacity onPress={() => router.back()} className="flex-row items-center gap-1">
-              <FontAwesome name="chevron-left" size={14} color="#2563eb" />
-              <Text className="text-sm text-blue-600 dark:text-blue-400">Back</Text>
+              <FontAwesome name="chevron-left" size={14} color={banditColors.primary} />
+              <Text className="text-sm text-bandit-primary dark:text-bandit-primarySoft">Back</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -95,7 +97,7 @@ export default function ShowDetailsScreen() {
 
       {loading ? (
         <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color="#2563eb" />
+          <ActivityIndicator size="large" color={tint} />
         </View>
       ) : (
         <>
@@ -106,10 +108,10 @@ export default function ShowDetailsScreen() {
                 {tabs.map((tab) => (
                   <TouchableOpacity
                     key={tab}
-                    className={`px-3 py-1.5 rounded-lg ${currentTab === tab ? 'bg-blue-600 dark:bg-blue-500' : 'bg-gray-100 dark:bg-gray-800'}`}
+                    className={`px-3 py-1.5 rounded-lg ${currentTab === tab ? 'bg-bandit-primary dark:bg-bandit-primaryDark' : 'bg-gray-100 dark:bg-charcoal-800'}`}
                     onPress={() => setCurrentTab(tab)}
                   >
-                    <Text className={`text-xs font-medium capitalize ${currentTab === tab ? 'text-white' : 'text-gray-700 dark:text-stone-400'}`}>{tab}</Text>
+                    <Text className={`text-xs font-redhat-medium capitalize ${currentTab === tab ? 'text-white' : 'text-gray-700 dark:text-stone-400'}`}>{tab}</Text>
                   </TouchableOpacity>
                 ))}
               </View>

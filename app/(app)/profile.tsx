@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { banditColors, useBrandTint } from '@/constants/Colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AppHeader from '@/components/AppHeader';
 import { auth } from '@/firebase';
@@ -31,6 +32,7 @@ const INSTRUMENTS: Instrument[] = [
 
 export default function ProfileScreen() {
   const bandStore = useBandStore();
+  const tint = useBrandTint();
   const user = auth.currentUser;
   const profile = bandStore.userProfile;
   const [activeTab, setActiveTab] = useState<'contact' | 'bio' | 'instruments' | 'media' | 'account'>('contact');
@@ -105,31 +107,31 @@ export default function ProfileScreen() {
 
   if (!profile) {
     return (
-      <SafeAreaView className="flex-1 bg-white dark:bg-gray-900" edges={['top']}>
+      <SafeAreaView className="flex-1 bg-white dark:bg-charcoal-900" edges={['top']}>
         <AppHeader />
         <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color="#2563eb" />
+          <ActivityIndicator size="large" color={tint} />
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white dark:bg-gray-900" edges={['top']}>
+    <SafeAreaView className="flex-1 bg-white dark:bg-charcoal-900" edges={['top']}>
       <AppHeader />
       <ScrollView className="flex-1 px-4 pt-4" keyboardShouldPersistTaps="handled">
         <View className="mb-4 flex-row items-center gap-3">
-          <View className="h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-blue-600">
+          <View className="h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-bandit-primary dark:bg-bandit-primaryDark">
             {profile.profilePictureUrl ? (
               <Image source={{ uri: profile.profilePictureUrl }} className="h-16 w-16" resizeMode="cover" />
             ) : (
-              <Text className="text-2xl font-bold text-white">
+              <Text className="font-redhat-bold text-2xl text-white">
                 {(form.displayName || profile.email || 'U').charAt(0).toUpperCase()}
               </Text>
             )}
           </View>
           <View className="flex-1">
-            <Text className="text-lg font-semibold text-gray-900 dark:text-white">User Profile</Text>
+            <Text className="font-redhat-semibold text-lg text-gray-900 dark:text-orange-100">User Profile</Text>
             <Text className="text-sm text-gray-500 dark:text-stone-400" numberOfLines={1}>
               {profile.email}
             </Text>
@@ -142,9 +144,9 @@ export default function ProfileScreen() {
               <TouchableOpacity
                 key={tab}
                 onPress={() => setActiveTab(tab)}
-                className={`rounded-lg px-3 py-2 ${activeTab === tab ? 'bg-blue-600' : 'bg-gray-100 dark:bg-gray-800'}`}
+                className={`rounded-lg px-3 py-2 ${activeTab === tab ? 'bg-bandit-primary dark:bg-bandit-primaryDark' : 'bg-gray-100 dark:bg-charcoal-800'}`}
               >
-                <Text className={`text-xs font-medium capitalize ${activeTab === tab ? 'text-white' : 'text-gray-700 dark:text-stone-400'}`}>
+                <Text className={`text-xs font-redhat-medium capitalize ${activeTab === tab ? 'text-white' : 'text-gray-700 dark:text-stone-400'}`}>
                   {tab}
                 </Text>
               </TouchableOpacity>
@@ -162,7 +164,7 @@ export default function ProfileScreen() {
 
         {activeTab === 'bio' && (
           <TextInput
-            className="min-h-[160px] rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 dark:border-stone-700 dark:bg-gray-800 dark:text-white"
+            className="min-h-[160px] rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 dark:border-stone-700 dark:bg-charcoal-800 dark:text-orange-100"
             value={form.bio}
             onChangeText={(bio) => setForm((f) => ({ ...f, bio }))}
             placeholder="Tell bandmates a little about yourself"
@@ -180,7 +182,7 @@ export default function ProfileScreen() {
                 <TouchableOpacity
                   key={instrument}
                   onPress={() => toggleInstrument(instrument)}
-                  className={`rounded-full px-3 py-2 ${selected ? 'bg-blue-600' : 'bg-gray-100 dark:bg-gray-800'}`}
+                  className={`rounded-full px-3 py-2 ${selected ? 'bg-bandit-primary dark:bg-bandit-primaryDark' : 'bg-gray-100 dark:bg-charcoal-800'}`}
                 >
                   <Text className={`text-sm capitalize ${selected ? 'text-white' : 'text-gray-700 dark:text-stone-300'}`}>
                     {instrument}
@@ -198,7 +200,7 @@ export default function ProfileScreen() {
             ) : (
               form.mediaLinks.map((link) => (
                 <View key={link.id} className="rounded-lg border border-gray-200 p-3 dark:border-stone-700">
-                  <Text className="font-medium text-gray-900 dark:text-white">{link.title}</Text>
+                  <Text className="font-redhat-medium text-gray-900 dark:text-orange-100">{link.title}</Text>
                   <Text className="text-sm text-gray-500 dark:text-stone-400" numberOfLines={1}>{link.url}</Text>
                 </View>
               ))
@@ -216,9 +218,9 @@ export default function ProfileScreen() {
         <TouchableOpacity
           onPress={handleSave}
           disabled={saving}
-          className="mb-8 mt-6 items-center rounded-lg bg-blue-600 py-3"
+          className="mb-8 mt-6 items-center rounded-lg bg-bandit-primary dark:bg-bandit-primaryDark py-3"
         >
-          <Text className="font-semibold text-white">{saving ? 'Saving...' : 'Save Profile'}</Text>
+          <Text className="font-redhat-semibold text-white">{saving ? 'Saving...' : 'Save Profile'}</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
@@ -229,10 +231,10 @@ function Field(props: React.ComponentProps<typeof TextInput> & { label: string }
   const { label, ...inputProps } = props;
   return (
     <View>
-      <Text className="mb-1 text-xs font-semibold uppercase text-gray-500 dark:text-stone-500">{label}</Text>
+      <Text className="mb-1 text-xs font-redhat-semibold uppercase text-gray-500 dark:text-stone-500">{label}</Text>
       <TextInput
         {...inputProps}
-        className="rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 dark:border-stone-700 dark:bg-gray-800 dark:text-white"
+        className="rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 dark:border-stone-700 dark:bg-charcoal-800 dark:text-orange-100"
         placeholderTextColor="#9ca3af"
       />
     </View>
@@ -242,8 +244,8 @@ function Field(props: React.ComponentProps<typeof TextInput> & { label: string }
 function Toggle({ label, value, onValueChange }: { label: string; value: boolean; onValueChange: (value: boolean) => void }) {
   return (
     <View className="flex-row items-center justify-between rounded-lg border border-gray-200 p-4 dark:border-stone-700">
-      <Text className="font-medium text-gray-900 dark:text-white">{label}</Text>
-      <Switch value={value} onValueChange={onValueChange} trackColor={{ false: '#d1d5db', true: '#2563eb' }} />
+      <Text className="font-redhat-medium text-gray-900 dark:text-orange-100">{label}</Text>
+      <Switch value={value} onValueChange={onValueChange} trackColor={{ false: '#d1d5db', true: banditColors.primary }} />
     </View>
   );
 }

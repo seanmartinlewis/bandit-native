@@ -87,9 +87,9 @@ export default function MessagesScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white dark:bg-gray-900" edges={['top']}>
+    <SafeAreaView className="flex-1 bg-white dark:bg-charcoal-900" edges={['top']}>
       <AppHeader bandId={bandId} />
-      <Text className="px-4 pt-3 pb-1 text-lg font-semibold text-gray-900 dark:text-orange-100">Messages</Text>
+      <Text className="px-4 pt-3 pb-1 font-redhat-semibold text-lg text-gray-900 dark:text-orange-100">Messages</Text>
 
       <KeyboardAvoidingView className="flex-1" behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={0}>
         <ScrollView ref={scrollRef} className="flex-1 px-3 pt-2" keyboardShouldPersistTaps="handled">
@@ -106,22 +106,22 @@ export default function MessagesScreen() {
 
                 {/* Bubble */}
                 <View className={`max-w-[75%]`}>
-                  {!isOwn && <Text className="text-xs font-semibold text-gray-700 dark:text-stone-400 mb-0.5 ml-1">{msg.userName}</Text>}
+                  {!isOwn && <Text className="text-xs font-redhat-semibold text-gray-700 dark:text-stone-400 mb-0.5 ml-1">{msg.userName}</Text>}
                   {editingId === msg.id ? (
                     <View className="flex-row items-center gap-2">
                       <TextInput
-                        className="flex-1 border border-blue-400 rounded-lg px-3 py-1.5 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm"
+                        className="flex-1 border border-bandit-primaryDisabled rounded-lg px-3 py-1.5 bg-white dark:bg-charcoal-800 text-gray-900 dark:text-orange-100 text-sm"
                         value={editText} onChangeText={setEditText} autoFocus
                       />
-                      <TouchableOpacity onPress={() => handleSaveEdit(msg.id)} className="bg-blue-600 p-2 rounded-lg">
+                      <TouchableOpacity onPress={() => handleSaveEdit(msg.id)} className="bg-bandit-primary dark:bg-bandit-primaryDark p-2 rounded-lg">
                         <FontAwesome name="check" size={12} color="white" />
                       </TouchableOpacity>
-                      <TouchableOpacity onPress={() => { setEditingId(null); setEditText(''); }} className="bg-gray-200 dark:bg-gray-700 p-2 rounded-lg">
+                      <TouchableOpacity onPress={() => { setEditingId(null); setEditText(''); }} className="bg-gray-200 dark:bg-charcoal-700 p-2 rounded-lg">
                         <FontAwesome name="times" size={12} color="#6b7280" />
                       </TouchableOpacity>
                     </View>
                   ) : (
-                    <View className={`rounded-xl px-3 py-2 ${isOwn ? 'bg-blue-600' : 'bg-gray-100 dark:bg-gray-800'}`}>
+                    <View className={`rounded-xl px-3 py-2 ${isOwn ? 'bg-bandit-primary dark:bg-bandit-primaryDark' : 'bg-gray-100 dark:bg-charcoal-800'}`}>
                       <Text className={`text-sm ${isOwn ? 'text-white' : 'text-gray-900 dark:text-stone-200'}`}>{msg.message}</Text>
                       <View className="flex-row items-center justify-end gap-1 mt-0.5">
                         <Text className={`text-xs ${isOwn ? 'text-blue-200' : 'text-gray-400 dark:text-stone-500'}`}>{formatTime(msg.createdAt)}</Text>
@@ -147,14 +147,14 @@ export default function MessagesScreen() {
         </ScrollView>
 
         {/* Input */}
-        <View className="flex-row items-end px-3 py-2 border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
+        <View className="flex-row items-end px-3 py-2 border-t border-gray-100 dark:border-charcoal-800 bg-white dark:bg-charcoal-900">
           <TextInput
-            className="flex-1 border border-gray-300 dark:border-stone-700 rounded-xl px-4 py-2.5 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-sm mr-2 max-h-28"
+            className="flex-1 border border-gray-300 dark:border-stone-700 rounded-xl px-4 py-2.5 bg-gray-50 dark:bg-charcoal-800 text-gray-900 dark:text-orange-100 text-sm mr-2 max-h-28"
             value={messageText} onChangeText={setMessageText}
             placeholder="Message..." placeholderTextColor="#9ca3af" multiline
           />
           <TouchableOpacity
-            className={`w-10 h-10 rounded-full items-center justify-center ${!messageText.trim() || sending ? 'bg-blue-400' : 'bg-blue-600'}`}
+            className={`w-10 h-10 rounded-full items-center justify-center ${!messageText.trim() || sending ? 'bg-bandit-primaryDisabled' : 'bg-bandit-primary dark:bg-bandit-primaryDark'}`}
             onPress={handleSend} disabled={!messageText.trim() || sending}
           >
             <FontAwesome name="send" size={14} color="white" />

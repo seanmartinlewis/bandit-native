@@ -1,14 +1,16 @@
 import { Stack, Redirect } from 'expo-router';
 import { useAuth } from '@/context/AuthContext';
 import { ActivityIndicator, View } from 'react-native';
+import { useBrandTint } from '@/constants/Colors';
 
 export default function AuthLayout() {
   const { user, loading } = useAuth();
+  const tint = useBrandTint();
 
   if (loading) {
     return (
-      <View className="flex-1 items-center justify-center bg-white dark:bg-gray-900">
-        <ActivityIndicator size="large" color="#2563eb" />
+      <View className="flex-1 items-center justify-center bg-white dark:bg-charcoal-900">
+        <ActivityIndicator size="large" color={tint} />
       </View>
     );
   }

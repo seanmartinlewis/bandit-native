@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Alert, ActivityIndicator, Linking } from 'react-native';
+import { banditColors, useBrandTint } from '@/constants/Colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams } from 'expo-router';
 import AppHeader from '@/components/AppHeader';
@@ -26,6 +27,7 @@ function getFileIcon(type: string): string {
 export default function DocumentsScreen() {
   const { bandId } = useLocalSearchParams<{ bandId: string }>();
   const bandStore = useBandStore();
+  const tint = useBrandTint();
   const [documents, setDocuments] = useState<BandDocument[]>([]);
   const [loading, setLoading] = useState(true);
   const canEdit = ['admin', 'edit'].includes(bandStore.currentRole || '');
@@ -80,17 +82,17 @@ export default function DocumentsScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white dark:bg-gray-900" edges={['top']}>
+    <SafeAreaView className="flex-1 bg-white dark:bg-charcoal-900" edges={['top']}>
       <AppHeader bandId={bandId} />
       <ScrollView className="flex-1 px-4 pt-4">
         <View className="flex-row justify-between items-center mb-4">
-          <Text className="text-lg font-semibold text-gray-900 dark:text-orange-100">Documents</Text>
+          <Text className="font-redhat-semibold text-lg text-gray-900 dark:text-orange-100">Documents</Text>
           <Text className="text-sm text-gray-500 dark:text-stone-500">Upload via web app</Text>
         </View>
 
         {loading ? (
           <View className="py-12 items-center">
-            <ActivityIndicator size="large" color="#2563eb" />
+            <ActivityIndicator size="large" color={tint} />
           </View>
         ) : documents.length === 0 ? (
           <View className="py-12 items-center">
@@ -101,12 +103,12 @@ export default function DocumentsScreen() {
           </View>
         ) : (
           documents.map((docItem) => (
-            <View key={docItem.id} className="flex-row items-center p-3 mb-2 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-stone-700">
-              <View className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 items-center justify-center mr-3">
-                <FontAwesome name={getFileIcon(docItem.fileType) as any} size={20} color="#2563eb" />
+            <View key={docItem.id} className="flex-row items-center p-3 mb-2 bg-gray-50 dark:bg-charcoal-800 rounded-lg border border-gray-200 dark:border-stone-700">
+              <View className="w-10 h-10 rounded-lg bg-bandit-primaryWash dark:bg-bandit-primaryWashDark items-center justify-center mr-3">
+                <FontAwesome name={getFileIcon(docItem.fileType) as any} size={20} color={banditColors.primary} />
               </View>
               <TouchableOpacity className="flex-1 min-w-0" onPress={() => handleOpen(docItem.fileUrl)}>
-                <Text className="text-sm font-medium text-gray-900 dark:text-white" numberOfLines={1}>
+                <Text className="text-sm font-redhat-medium text-gray-900 dark:text-orange-100" numberOfLines={1}>
                   {docItem.name || docItem.fileName}
                 </Text>
                 <Text className="text-xs text-gray-500 dark:text-stone-500">
